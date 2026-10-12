@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080b14">
+<title>HYDRA — Media Downloader</title>
+<style>
+:root{--bg:#080b14;--panel:rgba(17,23,39,.82);--line:rgba(255,255,255,.10);--muted:#98a4ba;--text:#f5f7ff;--a:#8b5cf6;--b:#22d3ee}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:radial-gradient(ellipse at 12% 0%,rgba(124,58,237,.22),transparent 35%),radial-gradient(ellipse at 90% 15%,rgba(6,182,212,.13),transparent 30%),var(--bg)}
+.wrap{width:min(1080px,92%);margin:auto}.top{display:flex;justify-content:space-between;align-items:center;padding:26px 0}.brand{font-weight:900;letter-spacing:.18em;font-size:18px}.brand span{color:var(--b)}.pill{font-size:12px;color:#c7d2fe;border:1px solid #34314f;border-radius:99px;padding:8px 12px;background:#15142a}
+.hero{text-align:center;padding:54px 0 30px}.eyebrow{display:inline-flex;gap:8px;align-items:center;color:#c4b5fd;font-size:12px;letter-spacing:.16em;text-transform:uppercase;border:1px solid rgba(167,139,250,.28);background:rgba(139,92,246,.1);padding:8px 12px;border-radius:99px}.dot{width:7px;height:7px;border-radius:50%;background:#34d399;box-shadow:0 0 12px #34d399}.hero h1{font-size:clamp(36px,7vw,68px);line-height:1.04;letter-spacing:-.055em;margin:22px 0 16px}.grad{background:linear-gradient(100deg,#c4b5fd,#67e8f9);-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{color:var(--muted);max-width:600px;margin:0 auto;line-height:1.7;font-size:16px}
+.panel{max-width:790px;margin:26px auto 0;padding:24px;border:1px solid var(--line);border-radius:26px;background:linear-gradient(145deg,rgba(24,31,52,.92),rgba(13,17,30,.94));box-shadow:0 25px 90px rgba(0,0,0,.34);backdrop-filter:blur(18px)}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:22px}.tab{border:1px solid var(--line);background:#101626;color:#aab4c8;border-radius:14px;padding:14px 8px;cursor:pointer;font:inherit;font-weight:650;transition:.2s}.tab.active{background:linear-gradient(130deg,rgba(139,92,246,.25),rgba(34,211,238,.10));border-color:rgba(167,139,250,.65);color:#fff;box-shadow:inset 0 0 0 1px rgba(167,139,250,.08)}.emoji{display:block;font-size:21px;margin-bottom:7px}
+.label{display:block;font-size:13px;color:#d9deeb;font-weight:650;margin:0 0 10px}.urlbox{display:flex;gap:8px;padding:8px;background:#090e1a;border:1px solid #30384d;border-radius:15px}.urlbox:focus-within{border-color:#8b5cf6;box-shadow:0 0 0 3px rgba(139,92,246,.12)}input{flex:1;min-width:0;background:transparent;border:0;outline:0;color:#fff;padding:8px 10px;font:inherit;font-size:14px}input::placeholder{color:#68758d}.paste{background:#202940;border:1px solid #39445e;color:#dbeafe;padding:0 14px;border-radius:10px;cursor:pointer;font-weight:650}.options{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:16px 0 20px;color:var(--muted);font-size:13px}.select{background:#11182a;color:#e5e7eb;border:1px solid #30384d;border-radius:10px;padding:9px 12px;font:inherit;outline:none}.primary{width:100%;border:0;border-radius:14px;padding:16px;background:linear-gradient(100deg,#8b5cf6,#6366f1 52%,#06b6d4);color:white;font:inherit;font-weight:800;letter-spacing:.01em;cursor:pointer;box-shadow:0 10px 28px rgba(99,102,241,.22);transition:transform .2s,opacity .2s}.primary:hover{transform:translateY(-1px)}.primary:disabled{opacity:.55;cursor:wait;transform:none}.status{display:none;margin-top:18px;padding:15px;border:1px solid var(--line);border-radius:14px;background:#0a1020}.status.show{display:block}.statusline{display:flex;justify-content:space-between;gap:10px;font-size:13px;color:#dce5f7}.track{height:6px;border-radius:9px;background:#222b40;margin-top:12px;overflow:hidden}.bar{height:100%;width:0;background:linear-gradient(90deg,#8b5cf6,#22d3ee);transition:width .3s}.statusmsg{font-size:12px;color:var(--muted);margin-top:10px;overflow-wrap:anywhere}.features{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:30px auto 55px;max-width:900px}.feature{border:1px solid var(--line);background:rgba(17,23,39,.5);border-radius:17px;padding:18px}.feature b{display:block;margin:8px 0 5px;font-size:14px}.feature p{color:var(--muted);font-size:12px;line-height:1.6;margin:0}.feature .ico{font-size:21px}footer{border-top:1px solid var(--line);padding:22px 0 30px;text-align:center;color:#7f8ba3;font-size:12px;line-height:1.8}footer a{color:#c4b5fd;text-decoration:none}footer a:hover{text-decoration:underline}.note{max-width:760px;margin:0 auto 20px;color:#7f8ba3;font-size:11px;line-height:1.6;text-align:center}
+@media(max-width:600px){.hero{padding-top:35px}.panel{padding:16px;border-radius:20px}.tab{font-size:12px;padding:12px 3px}.emoji{font-size:18px}.features{grid-template-columns:1fr;margin-bottom:35px}.options{align-items:flex-start;flex-direction:column}.urlbox{gap:4px}.paste{padding:0 10px}.top{padding:20px 0}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top"><div class="brand">HYDRA<span>•</span></div><div class="pill">✦ Premium Media Tools</div></header>
+<section class="hero">
+<div class="eyebrow"><span class="dot"></span> Fast · Simple · Clean</div>
+<h1>Your media.<br><span class="grad">One simple download.</span></h1>
+<p>Paste a public media link, choose your format, and let HYDRA prepare your file in a clean, distraction-free workspace.</p>
+</section>
+<main class="panel">
+<div class="tabs" role="tablist" aria-label="Download type">
+<button class="tab active" data-kind="video" type="button"><span class="emoji">▶</span>Video</button>
+<button class="tab" data-kind="audio" type="button"><span class="emoji">♫</span>Audio / MP3</button>
+<button class="tab" data-kind="social" type="button"><span class="emoji">▣</span>Instagram Reel</button>
+</div>
+<label class="label" for="url">Paste your media link</label>
+<div class="urlbox"><input id="url" type="url" placeholder="https://youtube.com/watch?v=…" autocomplete="url"><button class="paste" id="paste" type="button">Paste</button></div>
+<div class="options"><span id="hint">YouTube video · MP4 when available</span><label id="qualityWrap">Quality&nbsp; <select class="select" id="quality"><option value="best">Best available</option><option value="720">Up to 720p</option><option value="480">Up to 480p</option></select></label></div>
+<button class="primary" id="go" type="button">↓ &nbsp; Prepare Download</button>
+<div class="status" id="status" aria-live="polite"><div class="statusline"><b id="statusTitle">Working…</b><span id="pct">0%</span></div><div class="track"><div class="bar" id="bar"></div></div><div class="statusmsg" id="msg">Starting…</div><div id="downloadLink" style="margin-top:12px"></div></div>
+</main>
+<section class="features">
+<div class="feature"><span class="ico">⚡</span><b>Simple workflow</b><p>Choose a tool, paste a URL, and get a clear status while your file is prepared.</p></div>
+<div class="feature"><span class="ico">◈</span><b>Premium interface</b><p>A responsive dark interface designed for mobile and desktop screens.</p></div>
+<div class="feature"><span class="ico">⌁</span><b>Format choice</b><p>Video quality options and MP3 audio extraction where supported by the server.</p></div>
+</section>
+<p class="note">Use only for content you own or have permission to download. Platform rules and copyright laws apply. Some links may not work, and audio conversion requires FFmpeg.</p>
+<footer>Designed & developed by <a href="https://t.me/EREN_H4X" target="_blank" rel="noopener noreferrer">t.me/EREN_H4X</a><br>HYDRA Media Tools · Use responsibly</footer>
+</div>
+<script>
+const tabs=[...document.querySelectorAll('.tab')], url=document.getElementById('url'), hint=document.getElementById('hint'), qualityWrap=document.getElementById('qualityWrap');
+let kind='video', pollTimer=null;
+function choose(next){kind=next;tabs.forEach(t=>t.classList.toggle('active',t.dataset.kind===next));qualityWrap.style.display=next==='audio'?'none':'inline-flex';hint.textContent=next==='audio'?'Audio extraction · MP3':'Video download · Quality depends on source';if(next==='social'){url.placeholder='https://www.instagram.com/reel/…';hint.textContent='Instagram Reel · public links only'}else if(next==='video'){url.placeholder='https://youtube.com/watch?v=…'}else{url.placeholder='Paste a YouTube or supported media link…'}}
+tabs.forEach(t=>t.addEventListener('click',()=>choose(t.dataset.kind)));
+document.getElementById('paste').addEventListener('click',async()=>{try{url.value=await navigator.clipboard.readText();url.focus()}catch(e){url.focus();document.getElementById('msg').textContent='Clipboard access is blocked by your browser. Long-press the field and choose Paste.';document.getElementById('status').classList.add('show')}});
+const statusBox=document.getElementById('status'), go=document.getElementById('go');
+function showStatus(title,msg,pct=0){statusBox.classList.add('show');document.getElementById('statusTitle').textContent=title;document.getElementById('msg').textContent=msg;document.getElementById('pct').textContent=pct+'%';document.getElementById('bar').style.width=pct+'%'}
+go.addEventListener('click',async()=>{
+ const link=url.value.trim();
+ if(!link){url.focus();showStatus('Link required','Paste a public YouTube or Instagram link to continue.');return}
+ go.disabled=true;go.textContent='Preparing…';document.getElementById('downloadLink').innerHTML='';
+ try{
+  const response=await fetch('/api/download',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:link,kind:kind==='social'?'video':kind,quality:document.getElementById('quality').value})});
+  const data=await response.json();if(!response.ok)throw new Error(data.error||'Could not start download.');
+  showStatus('Preparing your file','Connecting to the source…',0);
+  await poll(data.job_id);
+ }catch(e){showStatus('Could not start',e.message||'Please check the link and try again.');go.disabled=false;go.textContent='↓  Prepare Download'}
+});
+async function poll(id){
+ try{
+  const r=await fetch('/api/status/'+encodeURIComponent(id));const j=await r.json();if(!r.ok)throw new Error(j.error||'Status check failed');
+  showStatus(j.status==='done'?'Ready to download':j.status==='error'?'Download failed':'Preparing your file',j.message||'Working…',j.progress||0);
+  if(j.status==='done'){document.getElementById('downloadLink').innerHTML='<a style="display:inline-block;color:#a5f3fc;font-weight:700;text-decoration:none" href="/file/'+encodeURIComponent(id)+'">↓ Download file</a>';go.disabled=false;go.textContent='↓  Prepare Another Download';return}
+  if(j.status==='error'){go.disabled=false;go.textContent='↻  Try Again';return}
+  setTimeout(()=>poll(id),1200);
+ }catch(e){showStatus('Connection issue',e.message);go.disabled=false;go.textContent='↻  Try Again'}
+}
+</script>
+</body>
+</html>
