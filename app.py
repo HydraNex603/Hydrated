@@ -54,8 +54,11 @@ def run_download(job_id, url, kind, quality):
         "restrictfilenames": True,
         "progress_hooks": [hook],
         "socket_timeout": 25,
-        "retries": 2,
-        "fragment_retries": 2,
+        "retries": 5,
+        "fragment_retries": 5,
+        "extractor_retries": 3,
+        "socket_timeout": 30,
+    
     }
     if kind == "audio":
         opts.update({
