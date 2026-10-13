@@ -47,17 +47,19 @@ def run_download(job_id, url, kind, quality):
                 jobs[job_id].update(progress=100, message="Preparing file…")
 
     opts = {
-        "outtmpl": output_template,
-        "noplaylist": True,
-        "quiet": True,
-        "no_warnings": True,
-        "restrictfilenames": True,
-        "progress_hooks": [hook],
-        "socket_timeout": 25,
-        "retries": 5,
-        "fragment_retries": 5,
-        "extractor_retries": 3,
-        "socket_timeout": 30,
+    "cookiefile": str(APP_DIR / "cookies.txt"),
+    "outtmpl": output_template,
+    "noplaylist": True,
+    "quiet": True,
+    "no_warnings": True,
+    "restrictfilenames": True,
+    "progress_hooks": [hook],
+    "socket_timeout": 25,
+    "retries": 2,
+    "fragment_retries": 2,
+    "extractor_retries": 2,
+    }
+        
     
     }
     if kind == "audio":
